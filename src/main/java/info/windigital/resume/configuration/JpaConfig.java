@@ -13,6 +13,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.sql.DataSource;
 import java.util.Objects;
@@ -63,5 +65,13 @@ public class JpaConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
 
         return transactionManager;
+    }
+
+    @Bean
+    public MultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//        multipartResolver.setMaxUploadSize(104857600000000l);
+//        multipartResolver.setMaxUploadSizePerFile(1048576000000l);
+        return multipartResolver;
     }
 }

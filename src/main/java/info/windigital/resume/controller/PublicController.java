@@ -1,5 +1,7 @@
 package info.windigital.resume.controller;
 
+import info.windigital.resume.entity.Profile;
+import info.windigital.resume.repository.ProfileRepository;
 import info.windigital.resume.service.NameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,13 +12,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class PublicController {
 
-    @Autowired
-    private NameService nameService;
+    private final ProfileRepository profileRepository;
+
+    public PublicController(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+    }
+
 
     @GetMapping("/{uid}")
     public String getProfile(@PathVariable String uid, Model model) {
-        String fullName = nameService.convertName(uid);
-        model.addAttribute("fullName", fullName);
+        Profile profile = profileRepository.findByUid(uid);
+        if (profile == null) {
+            return "profile_not_found";
+        }
+        model.addAttribute("profile", profile);
         return "profile";
     }
 
