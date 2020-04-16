@@ -43,4 +43,13 @@ public class Hobby implements ProfileEntity, Comparable<Hobby> {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
+
+    @Override
+    public int compareTo(Hobby o) {
+        if (o == null || getName() == null) {
+            return 1;
+        } else {
+            return getName().compareTo(o.getName());
+        }
+    }
 }
