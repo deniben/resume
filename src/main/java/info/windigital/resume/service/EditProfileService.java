@@ -1,22 +1,18 @@
 package info.windigital.resume.service;
 
+import info.windigital.resume.entity.Profile;
+import info.windigital.resume.entity.Skill;
 import info.windigital.resume.entity.SkillCategory;
-import info.windigital.resume.repository.SkillCategoryRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import info.windigital.resume.form.SignUpForm;
 
 import java.util.List;
 
-@Service
-@Transactional
-public class EditProfileService {
-    private final SkillCategoryRepository skillCategoryRepository;
+public interface EditProfileService {
+    Profile createNewProfile(SignUpForm signUpForm);
 
-    public EditProfileService(SkillCategoryRepository skillCategoryRepository) {
-        this.skillCategoryRepository = skillCategoryRepository;
-    }
+    List<Skill> listSkills(long idProfile);
 
-    public List<SkillCategory> findAll() {
-        return skillCategoryRepository.findAll();
-    }
+    List<SkillCategory> listSkillCategories();
+
+    void updateSkills(long idProfile, List<Skill> skills);
 }

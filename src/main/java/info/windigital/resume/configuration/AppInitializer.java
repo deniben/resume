@@ -1,6 +1,7 @@
 package info.windigital.resume.configuration;
 
 import info.windigital.resume.filter.ResumeFilter;
+import info.windigital.resume.filter.ResumeSitemeshFilter;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -24,6 +25,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[]{new ResumeFilter(), new OpenEntityManagerInViewFilter()};
+        return new Filter[]{new ResumeFilter(), new OpenEntityManagerInViewFilter(), new ResumeSitemeshFilter()};
     }
 }

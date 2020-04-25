@@ -18,6 +18,6 @@ public class ServiceConfig {
     }
 
     private static Resource[] getResources() {
-        return new Resource[]{new ClassPathResource("application.properties")};
+        return new Resource[]{new ClassPathResource("application.properties"), new ClassPathResource("logic.properties")};
     }
 }

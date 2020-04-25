@@ -1,5 +1,7 @@
 package info.windigital.resume.entity;
 
+import info.windigital.resume.annotation.constraint.EnglishLanguage;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,9 +12,11 @@ public class Skill implements ProfileEntity {
     private Long id;
 
     @Column(nullable = false, length = 50)
+    @EnglishLanguage
     private String category;
 
-    @Column(length = 2147483647)
+    @Column
+    @EnglishLanguage
     private String value;
 
     @ManyToOne(fetch = FetchType.LAZY)

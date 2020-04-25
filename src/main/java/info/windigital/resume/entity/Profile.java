@@ -1,6 +1,8 @@
 package info.windigital.resume.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -17,6 +19,9 @@ public class Profile {
     private String firstName;
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
+    @NotNull
+    @Size(min = 8)
+    private String password;
     @Column(name = "objective", length = 2147483647)
     private String objective;
     @Column
@@ -58,7 +63,7 @@ public class Profile {
     private List<Language> languages;
     @OneToMany(mappedBy = "profile", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @OrderBy("finishDate DESC ")
-    private List<Practic> practics;
+    private List<Practice> practices;
     @OneToMany(mappedBy = "profile", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @OrderBy("id ASC ")
     private List<Skill> skills;
@@ -203,6 +208,7 @@ public class Profile {
 
     public void setCertificates(List<Certificate> certificates) {
         this.certificates = certificates;
+        updateListSetProfile(this.certificates);
     }
 
     public List<Education> getEducations() {
@@ -211,6 +217,7 @@ public class Profile {
 
     public void setEducations(List<Education> educations) {
         this.educations = educations;
+        updateListSetProfile(this.educations);
     }
 
     public List<Hobby> getHobbies() {
@@ -219,6 +226,7 @@ public class Profile {
 
     public void setHobbies(List<Hobby> hobbies) {
         this.hobbies = hobbies;
+        updateListSetProfile(this.hobbies);
     }
 
     public List<Language> getLanguages() {
@@ -227,14 +235,16 @@ public class Profile {
 
     public void setLanguages(List<Language> languages) {
         this.languages = languages;
+        updateListSetProfile(this.languages);
     }
 
-    public List<Practic> getPractics() {
-        return practics;
+    public List<Practice> getPractices() {
+        return practices;
     }
 
-    public void setPractics(List<Practic> practics) {
-        this.practics = practics;
+    public void setPractices(List<Practice> practics) {
+        this.practices = practics;
+        updateListSetProfile(this.practices);
     }
 
     public List<Skill> getSkills() {
@@ -243,6 +253,15 @@ public class Profile {
 
     public void setSkills(List<Skill> skills) {
         this.skills = skills;
+        updateListSetProfile(this.skills);
+    }
+
+    private void updateListSetProfile(List<? extends ProfileEntity> list) {
+        if (list != null) {
+            for (ProfileEntity entity : list) {
+                entity.setProfile(this);
+            }
+        }
     }
 
     public List<Course> getCourses() {
@@ -254,10 +273,20 @@ public class Profile {
     }
 
     public Contacts getContacts() {
+        if (contacts == null)
+            contacts = new Contacts();
         return contacts;
     }
 
     public void setContacts(Contacts contacts) {
         this.contacts = contacts;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

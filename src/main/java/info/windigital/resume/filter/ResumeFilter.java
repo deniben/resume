@@ -32,13 +32,19 @@ public class ResumeFilter extends AbstractFilter {
 
     private void handleException(Throwable th, String requestURL, HttpServletResponse resp) throws IOException, ServletException {
         if (production) {
-            if ("/error".equals(requestURL)) {
-                throw new ServletException(th);
+            if (requestURL.startsWith("/fragment") || "/error".equals(requestURL)) {
+                sendErrorStatus(resp);
             } else {
                 resp.sendRedirect("/error?url=" + requestURL);
             }
         } else {
             throw new ServletException(th);
         }
+    }
+
+    private void sendErrorStatus(HttpServletResponse resp) throws IOException {
+        resp.reset();
+        resp.getWriter().write("");
+        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 }

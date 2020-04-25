@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table
-public class Practic extends AbstractFinishDateEntity implements ProfileEntity {
+public class Practice extends AbstractFinishDateEntity implements ProfileEntity {
     @Id
     @Column
     private Long id;
@@ -141,7 +141,7 @@ public class Practic extends AbstractFinishDateEntity implements ProfileEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Practic practic = (Practic) o;
+        Practice practic = (Practice) o;
         return Objects.equals(id, practic.id) &&
                 Objects.equals(position, practic.position) &&
                 Objects.equals(company, practic.company) &&

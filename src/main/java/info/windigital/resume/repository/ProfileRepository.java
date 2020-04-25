@@ -22,5 +22,7 @@ public interface ProfileRepository extends PagingAndSortingRepository<Profile, L
 
     List<Profile> findByCompletedTrueAndCreatedBefore(Timestamp oldDate);
 
+    List<Profile> findByCompletedFalseAndCreatedBefore(Timestamp oldDate);
+
 
 }
