@@ -1,5 +1,7 @@
 package info.windigital.resume.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Certificate implements ProfileEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_profile", nullable = false)
+    @JsonIgnore
     private Profile profile;
 
 

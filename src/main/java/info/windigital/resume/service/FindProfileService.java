@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 public interface FindProfileService {
     Profile findByUid(String uid);
 
-    Iterable<Profile> findAll();
+    Iterable<Profile> findAllForIndexing();
 
-    Page<Profile> findAll(Pageable var1);
+    Page<Profile> findAll(Pageable pageable);
+
+    Page<Profile> findBySearchQuery(String query, Pageable pageable);
 }

@@ -1,5 +1,6 @@
 package info.windigital.resume.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import info.windigital.resume.model.LanguageLevel;
 import info.windigital.resume.model.LanguageType;
 
@@ -13,6 +14,7 @@ public class Language implements ProfileEntity {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_profile", nullable = false)
+    @JsonIgnore
     private Profile profile;
 
     @Column(nullable = false, length = 30)

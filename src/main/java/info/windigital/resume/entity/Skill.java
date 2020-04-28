@@ -1,5 +1,6 @@
 package info.windigital.resume.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import info.windigital.resume.annotation.constraint.EnglishLanguage;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Skill implements ProfileEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_profile", nullable = false)
+    @JsonIgnore
     private Profile profile;
 
     public Long getId() {

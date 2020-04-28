@@ -143,8 +143,6 @@ f
 6src/main/webapp/WEB-INF/JSP/fragment/profile-items.jsp,3\f\3f2472f8be63536e63b56f727d0203e4a9a96206
 P
  src/main/webapp/static/js/app.js,e\1\e171efb53d34322bedd74349850bcbf00c0f96f9
-N
-src/main/webapp/WEB-INF/app.js,9\8\98d4c6a787fe45cd544fd35cf9e8f340c6c612fd
 R
 "src/main/webapp/static/css/app.css,a\7\a78ed9cf19b74b086d54c22340ba551795036159
 X
@@ -153,3 +151,9 @@ W
 'src/main/webapp/WEB-INF/section/css.jsp,b\7\b7195897cbcf6945f97bdfd9830493c32bc17999
 V
 &src/main/webapp/WEB-INF/section/js.jsp,2\5\25ab2e7a11e346102f416db914c62c196ac09bde
+{
+Ksrc/main/java/info/windigital/resume/configuration/ElasticSearchConfig.java,a\e\ae92958b5fa87d09c4f643bcc4078817d5c4c53e
+ç
+]src/main/java/info/windigital/resume/service/implementation/ElasticSearchIndexingService.java,e\f\efed8fc5c6f04bf17a35a371727add80ab5bf036
+É
+Ssrc/main/java/info/windigital/resume/repository/search/ProfileSearchRepository.java,4\6\469bf70d9945f826a210b8bceb13789c6c1219af

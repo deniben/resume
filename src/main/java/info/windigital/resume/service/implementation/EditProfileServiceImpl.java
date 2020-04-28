@@ -15,7 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +53,23 @@ public class EditProfileServiceImpl implements EditProfileService {
         profile.setPassword(signUpForm.getPassword());
         profile.setCompleted(false);
         profileRepository.save(profile);
+//        registerCreateIndexProfileIfTransactionSuccess(profile);
         return profile;
+    }
+
+    private void registerCreateIndexProfileIfTransactionSuccess(final Profile profile) {
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+            @Override
+            public void afterCommit() {
+                LOGGER.info("New profile created:{}", profile.getUid());
+                profile.setCertificates(Collections.emptyList());
+                profile.setPractices(Collections.emptyList());
+                profile.setLanguages(Collections.emptyList());
+                profile.setSkills(Collections.emptyList());
+                profile.setCourses(Collections.emptyList());
+                LOGGER.info("New Profiles index created: {}", profile.getUid());
+            }
+        });
     }
 
     private String generateProfileUid(SignUpForm signUpForm) {
@@ -87,7 +106,27 @@ public class EditProfileServiceImpl implements EditProfileService {
         } else {
             profile.setSkills(updatedSkills);
             profileRepository.save(profile);
+//            registerCreateIndexProfileSkillsIfTransactionSuccess(idProfile, updatedSkills);
         }
 
     }
+
+    private void registerCreateIndexProfileSkillsIfTransactionSuccess(long idProfile, List<Skill> updatedSkills) {
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+            @Override
+            public void afterCommit() {
+                LOGGER.info("profile skills updated");
+                updateIndexProfileSkills(idProfile, updatedSkills);
+            }
+        });
+    }
+
+    private void updateIndexProfileSkills(long idProfile, List<Skill> updatedSkills) {
+//        Optional<Profile> optionalProfile = profileSearchRepository.findById(idProfile);
+//        Profile  profile = optionalProfile.orElseGet(Profile::new);
+//        profile.setSkills(updatedSkills);
+//        profileSearchRepository.save(profile);
+        LOGGER.info("Profile skills index updated");
+    }
+
 }

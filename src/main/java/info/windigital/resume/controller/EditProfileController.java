@@ -1,14 +1,12 @@
 package info.windigital.resume.controller;
 
-import info.windigital.resume.entity.Profile;
+import info.windigital.resume.entity.CurrentProfile;
 import info.windigital.resume.form.SkillForm;
-import info.windigital.resume.repository.ProfileRepository;
-import info.windigital.resume.repository.SkillCategoryRepository;
 import info.windigital.resume.service.EditProfileService;
-import info.windigital.resume.service.FindProfileService;
 import info.windigital.resume.util.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,5 +48,10 @@ public class EditProfileController {
     private String gotoSkillsJSP(Model model) {
         model.addAttribute("skillCategories", editProfileService.listSkillCategories());
         return "edit/skills";
+    }
+
+    @GetMapping("/my-profile")
+    public String getMyProfile(@AuthenticationPrincipal CurrentProfile currentProfile) {
+        return "redirect:/" + currentProfile.getUsername();
     }
 }

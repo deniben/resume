@@ -1,5 +1,6 @@
 package info.windigital.resume.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Practice extends AbstractFinishDateEntity implements ProfileEntity 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_profile", nullable = false)
+    @JsonIgnore
     private Profile profile;
 
     @Column(nullable = false, length = 100)

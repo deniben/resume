@@ -1,5 +1,10 @@
 package info.windigital.resume.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
+import org.springframework.data.elasticsearch.annotations.Document;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "profile")
+@Document(indexName = "profile")
 public class Profile {
     @Id
     @Column(unique = true, nullable = false)
@@ -21,8 +27,9 @@ public class Profile {
     private String lastName;
     @NotNull
     @Size(min = 8)
+    @JsonIgnore
     private String password;
-    @Column(name = "objective", length = 2147483647)
+    @Column(name = "objective")
     private String objective;
     @Column
     private String summary;
@@ -33,20 +40,25 @@ public class Profile {
     @Column
     private String country;
     @Column
+    @JsonIgnore
     private String email;
     @Column
+    @JsonIgnore
     private String phone;
     @Column
     private String info;
     @Column(name = "large_photo")
+    @JsonIgnore
     private String largePhoto;
 
     @Column(name = "small_photo")
     private String smallPhoto;
 
     @Column(nullable = false)
+    @JsonIgnore
     private boolean completed;
 
+    @JsonIgnore
     @Column(insertable = false)
     private Timestamp created;
 
@@ -54,9 +66,11 @@ public class Profile {
     private List<Certificate> certificates;
     @OneToMany(mappedBy = "profile", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @OrderBy("finishYear DESC, beginYear DESC, id DESC")
+    @JsonIgnore
     private List<Education> educations;
     @OneToMany(mappedBy = "profile", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @OrderBy("name ASC")
+    @JsonIgnore
     private List<Hobby> hobbies;
 
     @OneToMany(mappedBy = "profile", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -72,6 +86,7 @@ public class Profile {
     private List<Course> courses;
 
     @Embedded
+    @JsonIgnore
     private Contacts contacts;
 
     public Long getId() {
@@ -288,5 +303,18 @@ public class Profile {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Transient
+    public int getAge() {
+        LocalDate birthDate = new LocalDate(birthDay);
+        LocalDate now = new LocalDate();
+        Years age = Years.yearsBetween(birthDate, now);
+        return age.getYears();
+    }
+
+    @Transient
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }
